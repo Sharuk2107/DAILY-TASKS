@@ -14,10 +14,12 @@ const {
 } = require('./db');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+const path = require('path');
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, '../dist')));
 
 // Initialize Database
 initDb();
@@ -144,6 +146,11 @@ app.get('/api/streak/:userId', async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
+});
+
+// Serve index.html for any other requests (Client-side routing)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 app.listen(PORT, () => {
