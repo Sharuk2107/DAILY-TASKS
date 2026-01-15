@@ -9,7 +9,7 @@ interface TaskInputProps {
 const TaskInput = ({ onSubmit, onTypingChange }: TaskInputProps) => {
     const [task, setTask] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
-    const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
         inputRef.current?.focus();
